@@ -10,10 +10,30 @@ export const AddFormData = createSlice({
       if (action.type === "add/addData") {
         return {
           ...state,
-          data: [action.payload],
+          data: [...state.data, action.payload],
         };
       }
       return state;
+    },
+    removeData: (state, action) => {
+      return {
+        ...state,
+        data: state.data.filter((item) => item?.id !== action.payload),
+      };
+    },
+    resetList: () => {
+      return {
+        data: [],
+      };
+    },
+    updatedata: (state, action) => {
+      return {
+        ...state,
+        data: [
+          ...state.data.filter((item) => item?.id !== action.payload.id),
+          action.payload,
+        ],
+      };
     },
   },
 });
@@ -22,10 +42,19 @@ export const addForm = (values) => async (dispatch) => {
   await dispatch(addData(values));
 };
 
-export const deleteData = () => async (dispatch) => {
-  await dispatch({ type: "add/addData", payload: [] });
+export const deleteData = (rowId) => async (dispatch) => {
+  await dispatch({ type: "add/removeData", payload: rowId });
 };
 
-export const { addData } = AddFormData.actions;
+export const reset = () => async (dispatch) => {
+  await dispatch(resetList());
+};
+
+export const editForm = (updatedata) => async (dispatch) => {
+  await dispatch({ type: "add/updatedata", payload: updatedata });
+};
+
+export const { addData, removeData, resetList, updatedata } =
+  AddFormData.actions;
 
 export default AddFormData.reducer;

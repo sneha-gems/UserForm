@@ -1,0 +1,13 @@
+.parent{
+    display: block;
+    margin-left: '300px';
+    height: '40%'
+}
+
+.grid-item{
+    padding: '100px';
+}
+.input-grid{
+    border-radius: '25px';
+    margin-left: '100px';
+}
