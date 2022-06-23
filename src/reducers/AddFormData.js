@@ -38,8 +38,21 @@ export const AddFormData = createSlice({
   },
 });
 
-export const addForm = (values) => async (dispatch) => {
-  await dispatch(addData(values));
+// export const addForm = (values) => async (dispatch) => {
+//   await dispatch(addData(values));
+// };
+export const addForm2 = (values) => (dispatch) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, 3000);
+  })
+    .then(() => {
+      dispatch(addData(values));
+    })
+    .catch((e) => {
+      console.error(e);
+    });
 };
 
 export const deleteData = (rowId) => async (dispatch) => {

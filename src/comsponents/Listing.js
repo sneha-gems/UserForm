@@ -1,9 +1,10 @@
+import { CircularProgress } from "@mui/material";
+import { useContext } from "react";
+import AppContext from "./AppContext";
 import CusTable from "./CusTable";
 
 export default function Listing() {
-  return (
-    <>
-      <CusTable />
-    </>
-  );
+  const { loading } = useContext(AppContext);
+
+  return <>{loading === true ? <CircularProgress /> : <CusTable />}</>;
 }

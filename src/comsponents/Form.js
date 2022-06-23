@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { addForm, editForm } from "../reducers/AddFormData";
+import { addForm2, editForm } from "../reducers/AddFormData";
 import * as Yup from "yup";
 import { useContext, useEffect, useState } from "react";
 import { CircularProgress, Grid } from "@mui/material";
@@ -39,12 +39,12 @@ export default function Form() {
         dispatch(editForm(values));
       } else {
         values["id"] = uuid();
-        dispatch(addForm(values));
+        dispatch(addForm2(values));
       }
       setDefaultdata(initData);
       setRowData({});
-      navigate(`/list`);
       setLoading(false);
+      navigate(`/list`);
     },
     enableReinitialize: true,
   });
@@ -76,6 +76,9 @@ export default function Form() {
           >
             <form onSubmit={formik.handleSubmit} className="grid-item">
               <Grid item>
+                {formik.errors.name && formik.touched && (
+                  <label>{`${formik.errors.name}`}</label>
+                )}
                 <Grid item>
                   <label>Full Name </label>
                 </Grid>
@@ -90,6 +93,9 @@ export default function Form() {
                 />
               </Grid>
               <Grid item>
+                {formik.errors.email && formik.touched && (
+                  <label>{`${formik.errors.email}`}</label>
+                )}
                 <Grid item>
                   <label>Email</label>
                 </Grid>
@@ -103,6 +109,9 @@ export default function Form() {
                 />
               </Grid>
               <Grid item>
+                {formik.errors.phone && formik.touched && (
+                  <label>{`${formik.errors.phone}`}</label>
+                )}
                 <Grid item>
                   <label>Phone Number</label>
                 </Grid>
@@ -132,8 +141,6 @@ export default function Form() {
           </Grid>
         </>
       )}
-
-      {/* <CusTable setdata={setdata} /> */}
     </>
   );
 }
