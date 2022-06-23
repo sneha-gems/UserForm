@@ -45,7 +45,7 @@ export const addForm2 = (values) => (dispatch) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve();
-    }, 3000);
+    }, 300);
   })
     .then(() => {
       dispatch(addData(values));
