@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   Paper,
   Table,
   TableBody,
@@ -20,44 +21,50 @@ export default function CusTable() {
   const navigate = useNavigate();
   const { data } = useSelector((state) => state);
   const contextValue = useContext(AppContext);
-  const { setRowData } = contextValue;
+  const { setRowData, loading } = contextValue;
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            {headName.map((item) => {
-              return <TableCell>{item}</TableCell>;
-            })}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data &&
-            data.map((item) => {
-              return (
-                <TableRow>
-                  <TableCell>{item?.id}</TableCell>
-                  <TableCell>{item?.name ?? "-"}</TableCell>
-                  <TableCell>{item?.email}</TableCell>
-                  <TableCell>{item?.phone}</TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={() => {
-                        navigate("/");
-                        setRowData(item);
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button onClick={() => dispatch(deleteData(item?.id))}>
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                {headName.map((item) => {
+                  return <TableCell>{item}</TableCell>;
+                })}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data &&
+                data.map((item) => {
+                  return (
+                    <TableRow>
+                      <TableCell>{item?.id}</TableCell>
+                      <TableCell>{item?.name ?? "-"}</TableCell>
+                      <TableCell>{item?.email}</TableCell>
+                      <TableCell>{item?.phone}</TableCell>
+                      <TableCell>
+                        <Button
+                          onClick={() => {
+                            navigate("/");
+                            setRowData(item);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Button onClick={() => dispatch(deleteData(item?.id))}>
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </>
   );
 }
